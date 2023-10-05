@@ -58,6 +58,7 @@ static class ModuleDescription
 		new UnitTest("Runtime.XML.Test.PatcherAppend"),
 		new UnitTest("Runtime.XML.Test.PatcherModify"),
 		new UnitTest("Runtime.XML.Test.PatcherRemove"),
+		new UnitTest("Runtime.XML.Test.YamlTest"),
 	];
 	
 }

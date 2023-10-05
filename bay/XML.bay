@@ -84,7 +84,7 @@ class XML
 		string res = "";
 		
 		#ifcode PHP then
-		if ($this->xml)
+		if ($this->xml !== null)
 		{
 			$res = $this->xml->getName();
 		}
@@ -102,7 +102,7 @@ class XML
 		#ifcode PHP then
 		$res = [];
 		
-		if ($this->xml)
+		if ($this->xml !== null)
 		{
 			$xml = $this->xml->$name;
 			for ($i=0; $i<$xml->count(); $i++)
@@ -128,7 +128,7 @@ class XML
 		string value = "";
 		
 		#ifcode PHP then
-		if ($this->xml)
+		if ($this->xml !== null)
 		{
 			$value = (string)$this->xml;
 		}
@@ -148,8 +148,10 @@ class XML
 	int count()
 	{
 		#ifcode PHP then
-		if ($this->xml)
+		if ($this->xml !== null)
+		{
 			return $this->xml->children()->count();
+		}
 		#endif
 		
 		return 0;
@@ -165,12 +167,15 @@ class XML
 		$arr = [];
 		$pos = 0;
 		
-		foreach ($this->xml as $child)
+		if ($this->xml != null)
 		{
-			$item = static::newInstance();
-			$item->xml = $child;
-			$arr[] = $item;
-			$pos++;
+			foreach ($this->xml as $child)
+			{
+				$item = static::newInstance();
+				$item->xml = $child;
+				$arr[] = $item;
+				$pos++;
+			}
 		}
 		
 		return \Runtime\Vector::from($arr);

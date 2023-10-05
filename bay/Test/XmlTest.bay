@@ -221,4 +221,16 @@ class XmlTest
 		);
 	}
 	
+	
+	@Test{}
+	static void testEmptyItem()
+	{
+		XML xml = XML::loadXml(
+			'<root>
+				<item></item>
+			</root>'
+		);
+		rtl::assert(xml.get('item').get(0).getName() == "item", "Wrong item");
+	}
+	
 }
