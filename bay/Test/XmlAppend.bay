@@ -30,13 +30,15 @@ class XmlAppend
 	@Test{}
 	static void testAppend1()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+				<test>123</test>
+			</root>'
+		);
 		
 		XML xml_item = XML::loadXml('<item>4</item>');
 		
@@ -60,18 +62,22 @@ class XmlAppend
 	@Test{}
 	static void testAppend2()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+				<test>123</test>
+			</root>'
+		);
 		
-		XML xml_item = XML::loadXml('<item>
-			<subitem>1</subitem>
-			<subitem>2</subitem>
-		</item>');
+		XML xml_item = XML::loadXml(
+			'<item>
+				<subitem>1</subitem>
+				<subitem>2</subitem>
+			</item>'
+		);
 		
 		xml.append(xml_item);
 		
@@ -96,18 +102,22 @@ class XmlAppend
 	@Test{}
 	static void testAppend3()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+				<test>123</test>
+			</root>'
+		);
 		
-		XML xml_item = XML::loadXml('<item name="test" color="white">
-			<subitem>1</subitem>
-			<subitem>2</subitem>
-		</item>');
+		XML xml_item = XML::loadXml(
+			'<item name="test" color="white">
+				<subitem>1</subitem>
+				<subitem>2</subitem>
+			</item>'
+		);
 		
 		xml.append(xml_item);
 		
@@ -132,13 +142,15 @@ class XmlAppend
 	@Test{}
 	static void testAppend4()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+				<test>123</test>
+			</root>'
+		);
 		
 		XML xml_item = XML::loadXml('<first name="test" color="white">4</first>');
 		
@@ -162,18 +174,22 @@ class XmlAppend
 	@Test{}
 	static void testAppend5()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+				<test>123</test>
+			</root>'
+		);
 		
-		XML xml_item = XML::loadXml('<first name="test" color="white">
-			<subitem>1</subitem>
-			<subitem>2</subitem>
-		</first>');
+		XML xml_item = XML::loadXml(
+			'<first name="test" color="white">
+				<subitem>1</subitem>
+				<subitem>2</subitem>
+			</first>'
+		);
 		
 		xml.prepend(xml_item);
 		

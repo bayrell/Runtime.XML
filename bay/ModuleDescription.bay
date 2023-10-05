@@ -16,9 +16,11 @@
  *  limitations under the License.
  */
 
-namespace Runtime.XML.Test;
+namespace Runtime.XML;
 
-use Runtime.Unit.UnitTest;
+use Runtime.Entity.Provider;
+use Runtime.XML.PatcherProvider;
+use Runtime.XML.XMLPatcher;
 
 
 static class ModuleDescription
@@ -27,7 +29,7 @@ static class ModuleDescription
 	 * Returns module name
 	 * @return string
 	 */
-	pure string getModuleName() => "Runtime.XML.Test";
+	pure string getModuleName() => "Runtime.XML";
 	
 	
 	/**
@@ -44,7 +46,6 @@ static class ModuleDescription
 	pure Dict<string> requiredModules() =>
 	{
 		"Runtime": ">=0.11",
-		"Runtime.Unit": ">=0.11",
 	};
 	
 	
@@ -53,11 +54,10 @@ static class ModuleDescription
 	 */
 	pure Collection<Dict> entities() =>
 	[
-		new UnitTest("Runtime.XML.Test.XmlTest"),
-		new UnitTest("Runtime.XML.Test.XmlAppend"),
-		new UnitTest("Runtime.XML.Test.PatcherAppend"),
-		new UnitTest("Runtime.XML.Test.PatcherModify"),
-		new UnitTest("Runtime.XML.Test.PatcherRemove"),
+		new Provider(classof PatcherProvider, classof PatcherProvider),
+		new XMLPatcher("Runtime.XML.Patchers.Append"),
+		new XMLPatcher("Runtime.XML.Patchers.Modify"),
+		new XMLPatcher("Runtime.XML.Patchers.Remove"),
 	];
 	
 }

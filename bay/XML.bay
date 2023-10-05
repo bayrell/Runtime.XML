@@ -18,6 +18,9 @@
 
 namespace Runtime.XML;
 
+use Runtime.XML.PatcherProvider;
+use Runtime.XML.BasePatcher;
+
 
 class XML
 {
@@ -120,16 +123,22 @@ class XML
 	/**
 	 * Get value
 	 */
-	string value()
+	string value(bool trim=true)
 	{
-		string res = "";
+		string value = "";
 		
 		#ifcode PHP then
 		if ($this->xml)
-			$res = (string)$this->xml;
+		{
+			$value = (string)$this->xml;
+		}
+		if ($trim)
+		{
+			$value = \Runtime\rs::trim($value);
+		}
 		#endif
 		
-		return res;
+		return value;
 	}
 	
 	
@@ -172,15 +181,30 @@ class XML
 	
 	
 	/**
+	 * Remove childs
+	 */
+	void removeChilds()
+	{
+		Collection items = this.childs();
+		for (int i=0; i<items.count(); i++)
+		{
+			items.get(i).remove();
+		}
+	}
+	
+	
+	/**
 	 * Get attribute
 	 */
-	string attr(string key)
+	string attr(string key, bool trim=true)
 	{
 		#ifcode PHP then
 		$attrs = $this->xml->attributes();
 		if (isset($attrs[$key]))
 		{
-			return (string)$attrs[$key];
+			$value = (string)$attrs[$key];
+			if ($trim) $value = \Runtime\rs::trim($value);
+			return $value;
 		}
 		#endif
 		
@@ -191,7 +215,7 @@ class XML
 	/**
 	 * Get attribute
 	 */
-	Map attributes()
+	Map attributes(bool trim=true)
 	{
 		Map items = new Map();
 		
@@ -199,7 +223,14 @@ class XML
 		$attrs = $this->xml->attributes();
 		foreach ($attrs as $key => $value)
 		{
-			$items->setValue($key, (string)$value);
+			if ($trim)
+			{
+				$items->setValue($key, \Runtime\rs::trim((string)$value));
+			}
+			else
+			{
+				$items->setValue($key, (string)$value);
+			}
 		}
 		#endif
 		
@@ -244,6 +275,25 @@ class XML
 			string value = attrs.get(key);
 			this.addAttribute(key, value);
 		}
+	}
+	
+	
+	/**
+	 * Remove attributes
+	 */
+	void removeAttributes()
+	{
+		Dict attrs = this.attributes();
+		Collection attrs_keys = attrs.keys();
+		
+		#ifcode PHP then
+		$dom = dom_import_simplexml($this->xml);
+		for ($i=0; $i<$attrs_keys->count(); $i++)
+		{
+			$key = $attrs_keys->get($i);
+			$dom->removeAttribute($key);
+		}
+		#endif
 	}
 	
 	
@@ -319,6 +369,42 @@ class XML
 			XML item = items.get(i);
 			this.append(item);
 		}
+	}
+	
+	
+	/**
+	 * Patch XML with operation
+	 */
+	void patch(XML operation)
+	{
+		string type = operation.attr('type');
+		PatcherProvider provider = @.provider(classof PatcherProvider);
+		BasePatcher patcher = provider.getPatcher(type);
+		if (patcher)
+		{
+			patcher.patch(this, operation);
+		}
+	}
+	
+	
+	/**
+	 * Patch XML with operation
+	 */
+	Vector<XML> xpath(string path)
+	{
+		Vector res = new Vector();
+		
+		#ifcode PHP then
+		$items = $this->xml->xpath($path);
+		foreach ($items as $xml)
+		{
+			$item = static::newInstance();
+			$item->xml = $xml;
+			$res->pushValue($item);
+		}
+		#endif
+		
+		return res;
 	}
 	
 	

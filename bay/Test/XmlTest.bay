@@ -25,16 +25,43 @@ use Runtime.XML.XML;
 
 class XmlTest
 {
+	/**
+	 * Assert xml
+	 */
+	static void assertEqualXml(string message, XML xml1, string xml2, bool log_xml = false)
+	{
+		string s1 = xml1.toString({ 'indent': false, 'output-xml': true });
+		s1 = rs::replace("\n", "", s1);
+		s1 = rs::replace("\t", "", s1);
+		s1 = rs::lower(s1);
+		
+		string s2 = rs::replace("\n", "", xml2);
+		s2 = rs::replace("\t", "", s2);
+		s2 = rs::lower(s2);
+		
+		if (s1 != s2 and log_xml)
+		{
+			io::print(
+				xml1.toString()
+			);
+		}
+		
+		rtl::assert(s1 == s2, message);
+	}
+	
+	
 	@Test{}
 	static void testLoadXml()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8" ?>
-		<root>
-			<item1>1</item1>
-			<item2>2</item2>
-			<item3><aa>3</aa></item3>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8" ?>
+			<root>
+				<item1>1</item1>
+				<item2>2</item2>
+				<item3><aa>3</aa></item3>
+				<test>123</test>
+			</root>'
+		);
 		
 		/* Check load xml */
 		rtl::assert(xml != null, "XML is null");
@@ -57,12 +84,14 @@ class XmlTest
 	@Test{}
 	static void testChilds()
 	{
-		XML xml = XML::loadXml('<root>
-			<item>1</item>
-			<item>2</item>
-			<item><aa>3</aa></item>
-			<test>123</test>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item>1</item>
+				<item>2</item>
+				<item><aa>3</aa></item>
+				<test>123</test>
+			</root>'
+		);
 		
 		rtl::assert(xml.get("item").count() == 3, "Wrong count items");
 		rtl::assert(xml.get("item").get(2).get("aa").get(0).value() == "3", "Wrong item content");
@@ -86,35 +115,14 @@ class XmlTest
 	}
 	
 	
-	/**
-	 * Assert xml
-	 */
-	static void assertEqualXml(string message, XML xml1, string xml2, bool log_xml = false)
-	{
-		string s1 = xml1.toString({ 'indent': false, 'output-xml': true });
-		s1 = rs::replace("\n", "", s1);
-		s1 = rs::replace("\t", "", s1);
-		s1 = rs::lower(s1);
-		
-		string s2 = rs::replace("\n", "", xml2);
-		s2 = rs::replace("\t", "", s2);
-		s2 = rs::lower(s2);
-		
-		if (s1 != s2 and log_xml)
-		{
-			io::print(s1);
-		}
-		
-		rtl::assert(s1 == s2, message);
-	}
-	
-	
 	@Test{}
 	static void testCountZero()
 	{
-		XML xml = XML::loadXml('<root>
-			<item></item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item></item>
+			</root>'
+		);
 		rtl::assert(xml.get('item').get(0).count() == 0, "Count must be zero");
 	}
 	
@@ -122,11 +130,13 @@ class XmlTest
 	@Test{}
 	static void testCountOne()
 	{
-		XML xml = XML::loadXml('<root>
-			<item>
-				<subitem>1</subitem>
-			</item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item>
+					<subitem>1</subitem>
+				</item>
+			</root>'
+		);
 		rtl::assert(xml.get('item').get(0).count() == 1, "Count must be one");
 	}
 	
@@ -134,12 +144,14 @@ class XmlTest
 	@Test{}
 	static void testCountTwo()
 	{
-		XML xml = XML::loadXml('<root>
-			<item>
-				<subitem1>1</subitem1>
-				<subitem2>2</subitem2>
-			</item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item>
+					<subitem1>1</subitem1>
+					<subitem2>2</subitem2>
+				</item>
+			</root>'
+		);
 		rtl::assert(xml.get('item').get(0).count() == 2, "Count must be two");
 	}
 	
@@ -147,9 +159,11 @@ class XmlTest
 	@Test{}
 	static void testAttributes1()
 	{
-		XML xml = XML::loadXml('<root>
-			<item name="name1" test="123">content</item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item name="name1" test="123">content</item>
+			</root>'
+		);
 		
 		Map attrs = xml.get('item').get(0).attributes();		
 		rtl::assert(attrs.get("name") == "name1", "Attribute 'name' is not correct");
@@ -161,9 +175,11 @@ class XmlTest
 	@Test{}
 	static void testAttributes2()
 	{
-		XML xml = XML::loadXml('<root>
-			<item name="name1" test="123">content</item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<root>
+				<item name="name1" test="123">content</item>
+			</root>'
+		);
 		
 		XML item = xml.get('item').get(0);		
 		
@@ -183,12 +199,14 @@ class XmlTest
 	@Test{}
 	static void testRemoveItem()
 	{
-		XML xml = XML::loadXml('<?xml version="1.0" encoding="UTF-8"?>
-		<root>
-			<item>1</item>
-			<item>2</item>
-			<item>3</item>
-		</root>');
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<root>
+				<item>1</item>
+				<item>2</item>
+				<item>3</item>
+			</root>'
+		);
 		
 		xml.get('item').get(2).remove();
 		
