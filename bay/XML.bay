@@ -84,7 +84,7 @@ class XML
 		string res = "";
 		
 		#ifcode PHP then
-		if ($this->xml !== null)
+		if ($this->xml != null)
 		{
 			$res = $this->xml->getName();
 		}
@@ -102,7 +102,7 @@ class XML
 		#ifcode PHP then
 		$res = [];
 		
-		if ($this->xml !== null)
+		if ($this->xml != null)
 		{
 			$xml = $this->xml->$name;
 			for ($i=0; $i<$xml->count(); $i++)
@@ -128,7 +128,7 @@ class XML
 		string value = "";
 		
 		#ifcode PHP then
-		if ($this->xml !== null)
+		if ($this->xml != null)
 		{
 			$value = (string)$this->xml;
 		}
@@ -148,7 +148,7 @@ class XML
 	int count()
 	{
 		#ifcode PHP then
-		if ($this->xml !== null)
+		if ($this->xml != null)
 		{
 			return $this->xml->children()->count();
 		}
@@ -204,12 +204,15 @@ class XML
 	string attr(string key, bool trim=true)
 	{
 		#ifcode PHP then
-		$attrs = $this->xml->attributes();
-		if (isset($attrs[$key]))
+		if ($this->xml != null)
 		{
-			$value = (string)$attrs[$key];
-			if ($trim) $value = \Runtime\rs::trim($value);
-			return $value;
+			$attrs = $this->xml->attributes();
+			if (isset($attrs[$key]))
+			{
+				$value = (string)$attrs[$key];
+				if ($trim) $value = \Runtime\rs::trim($value);
+				return $value;
+			}
 		}
 		#endif
 		
@@ -225,18 +228,23 @@ class XML
 		Map items = new Map();
 		
 		#ifcode PHP then
-		$attrs = $this->xml->attributes();
-		foreach ($attrs as $key => $value)
+		
+		if ($this->xml != null)
 		{
-			if ($trim)
+			$attrs = $this->xml->attributes();
+			foreach ($attrs as $key => $value)
 			{
-				$items->setValue($key, \Runtime\rs::trim((string)$value));
-			}
-			else
-			{
-				$items->setValue($key, (string)$value);
+				if ($trim)
+				{
+					$items->setValue($key, \Runtime\rs::trim((string)$value));
+				}
+				else
+				{
+					$items->setValue($key, (string)$value);
+				}
 			}
 		}
+		
 		#endif
 		
 		return items;
@@ -249,7 +257,10 @@ class XML
 	void addAttribute(string key, string value)
 	{
 		#ifcode PHP then
-		$this->xml->addAttribute($key, $value);
+		if ($this->xml != null)
+		{
+			$this->xml->addAttribute($key, $value);
+		}
 		#endif
 	}
 	void addAttr(string key, string value) => this.addAttribute(key, value);
@@ -261,8 +272,11 @@ class XML
 	void removeAttribute(string key)
 	{
 		#ifcode PHP then
-		$dom = dom_import_simplexml($this->xml);
-		$dom->removeAttribute($key);
+		if ($this->xml != null)
+		{
+			$dom = dom_import_simplexml($this->xml);
+			$dom->removeAttribute($key);
+		}
 		#endif
 	}
 	void removeAttr(string key) => this.removeAttribute(key);
@@ -292,11 +306,14 @@ class XML
 		Collection attrs_keys = attrs.keys();
 		
 		#ifcode PHP then
-		$dom = dom_import_simplexml($this->xml);
-		for ($i=0; $i<$attrs_keys->count(); $i++)
+		if ($this->xml != null)
 		{
-			$key = $attrs_keys->get($i);
-			$dom->removeAttribute($key);
+			$dom = dom_import_simplexml($this->xml);
+			for ($i=0; $i<$attrs_keys->count(); $i++)
+			{
+				$key = $attrs_keys->get($i);
+				$dom->removeAttribute($key);
+			}
 		}
 		#endif
 	}
@@ -308,8 +325,11 @@ class XML
 	void remove()
 	{
 		#ifcode PHP then
-		$item = dom_import_simplexml($this->xml);
-		$item->parentNode->removeChild($item);
+		if ($this->xml != null)
+		{
+			$item = dom_import_simplexml($this->xml);
+			$item->parentNode->removeChild($item);
+		}
 		#endif
 	}
 	

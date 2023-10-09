@@ -55,9 +55,12 @@ static class ModuleDescription
 	pure Collection<Dict> entities() =>
 	[
 		new Provider(classof PatcherProvider, classof PatcherProvider),
+		new XMLPatcher("Runtime.XML.Patchers.AddAttribute"),
 		new XMLPatcher("Runtime.XML.Patchers.Append"),
 		new XMLPatcher("Runtime.XML.Patchers.Modify"),
+		new XMLPatcher("Runtime.XML.Patchers.ModifyAttribute"),
 		new XMLPatcher("Runtime.XML.Patchers.Remove"),
+		new XMLPatcher("Runtime.XML.Patchers.RemoveAttribute"),
 	];
 	
 }
