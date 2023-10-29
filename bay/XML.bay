@@ -70,9 +70,7 @@ class XML
 	bool exists()
 	{
 		if (this.xml == null) return false;
-		if (this.errors == null) return true;
-		if (this.errors.count() == 0) return true;
-		return false;
+		return true;
 	}
 	
 	
