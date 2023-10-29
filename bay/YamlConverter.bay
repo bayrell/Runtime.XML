@@ -118,6 +118,15 @@ class YamlConverter
 				value = exists_value;
 			}
 			
+			if (value instanceof Dict)
+			{
+				value = value.toDict();
+			}
+			else if (value instanceof Vector)
+			{
+				value = value.toCollection();
+			}
+			
 			res.setValue(key, value);
 		}
 		
@@ -139,15 +148,18 @@ class YamlConverter
 	 */
 	string convert()
 	{
-	   string yaml = "";
-	   Map data = this.toDict(this.xml);
-	   
-	   #ifcode PHP then
-	   $data = \Runtime\rtl::ObjectToNative($data);
-	   $yaml = \Symfony\Component\Yaml\Yaml::dump($data, 10, 2);
-	   #endif
-	   
-	   return yaml;
+		string yaml = "";
+		Map data = this.toDict(this.xml);
+
+		#ifcode PHP then
+		$data = \Runtime\rtl::ObjectToNative($data);
+		$yaml = \Symfony\Component\Yaml\Yaml::dump(
+			$data, 10, 2,
+			\Symfony\Component\Yaml\Yaml::DUMP_OBJECT_AS_MAP
+		);
+		#endif
+		
+		return yaml;
 	}
 	
 }
