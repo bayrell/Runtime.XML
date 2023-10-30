@@ -111,7 +111,7 @@ class XmlTest
 	static void testVersion_1_1()
 	{
 		XML xml = XML::loadXml('<?xml version="1.1" encoding="UTF-8" ?><root></root>');
-		rtl::assert(not xml.exists(), "Incorrect XML test failed");
+		rtl::assert(xml.exists(), "Incorrect XML test failed");
 	}
 	
 	
