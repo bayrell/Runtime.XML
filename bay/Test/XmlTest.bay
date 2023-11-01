@@ -28,7 +28,7 @@ class XmlTest
 	/**
 	 * Assert xml
 	 */
-	static void assertEqualXml(string message, XML xml1, string xml2, bool log_xml = false)
+	static void assertEqualXml(string message, XML xml1, string xml2, bool log_xml = true)
 	{
 		string s1 = xml1.toString({ 'indent': false, 'output-xml': true });
 		s1 = rs::replace("\n", "", s1);

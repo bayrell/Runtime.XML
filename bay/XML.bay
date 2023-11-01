@@ -396,6 +396,19 @@ class XML
 	
 	
 	/**
+	 * Prepend childs from XML
+	 */
+	void prependItems(Collection<XML> items)
+	{
+		for (int i=0; i<items.count(); i++)
+		{
+			XML item = items.get(i);
+			this.prepend(item);
+		}
+	}
+	
+	
+	/**
 	 * Patch XML with operation
 	 */
 	void patch(XML operation)

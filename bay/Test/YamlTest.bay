@@ -27,24 +27,27 @@ use Runtime.XML.YamlConverter;
 
 class YamlTest
 {
-	
 	/**
 	 * Check if yaml is correct
 	 */
-	static Dict toDict(XML xml, Dict variables = null)
+	static void assertYaml(XML xml, Dict d1, Dict variables = null, bool log_yaml = true)
 	{
 		YamlConverter converter = new YamlConverter(xml, variables);
-		return converter.toDict();
-	}
-	
-	
-	/**
-	 * Check if yaml is correct
-	 */
-	static void assertYaml(XML xml, Dict d1, Dict variables = null)
-	{
-		Dict d2 = static::toDict(xml, variables);
-		AssertHelper::equalDict(d1, d2, "Yaml");
+		Dict d2 = converter.toDict();
+		try
+		{
+			AssertHelper::equalDict(d1, d2, "Yaml");
+		}
+		catch (var e)
+		{
+			if (log_yaml)
+			{
+				io::print(
+					converter.convert()
+				);
+			}
+			throw e;
+		}
 	}
 	
 	
@@ -79,6 +82,7 @@ class YamlTest
 				<item>1</item>
 				<item>2</item>
 				<item>3</item>
+				<item>4</item>
 			</root>'
 		);
 		
@@ -87,6 +91,7 @@ class YamlTest
 				"1",
 				"2",
 				"3",
+				"4",
 			],
 		};
 		

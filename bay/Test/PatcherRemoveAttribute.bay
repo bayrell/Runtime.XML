@@ -42,7 +42,7 @@ class PatcherRemoveAttribute
 		XML operation = XML::loadXml(
 			'<operation type="remove_attribute">
 				<path>/root/item</path>
-                <key>name</key>
+                <name>name</name>
 			</operation>'
 		);
 		
@@ -56,7 +56,7 @@ class PatcherRemoveAttribute
 				<item>1</item>
 				<item>2</item>
 				<item>3</item>
-			</root>', true
+			</root>'
 		);
 	}
 	

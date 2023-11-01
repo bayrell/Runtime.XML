@@ -82,7 +82,66 @@ class PatcherAppend
 						</other>
 					</services>
 				</yaml>
-			</template>', true
+			</template>'
+		);
+	}
+	
+	
+	@Test{}
+	static void testAdd2()
+	{
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<template>
+				<yaml>
+					<services>
+						<test>
+							<image>test</image>
+						</test>
+						<database>
+							<image>database</image>
+						</database>
+						<other>
+							<image>other</image>
+							<dns>192.168.1.1</dns>
+						</other>
+					</services>
+				</yaml>
+			</template>'
+		);
+		
+		XML operation = XML::loadXml(
+			'<operation type="add" position="first">
+				<path>/template/yaml[not(version)]</path>
+				<value>
+					<version>3.7</version>
+				</value>
+			</operation>'
+		);
+		
+		xml.patch(operation);
+		
+		XmlTest::assertEqualXml(
+			'Patch xml error',
+			xml,
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<template>
+				<yaml>
+					<version>3.7</version>
+					<services>
+						<test>
+							<image>test</image>
+						</test>
+						<database>
+							<image>database</image>
+						</database>
+						<other>
+							<image>other</image>
+							<dns>192.168.1.1</dns>
+						</other>
+					</services>
+				</yaml>
+			</template>'
 		);
 	}
 	

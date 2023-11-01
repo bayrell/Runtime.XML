@@ -34,6 +34,7 @@ class AddAttribute extends BasePatcher
 			'add_attribute',
 			'attr_add',
 			'attribute_add',
+			'addAttribute',
 		];
 	}
 	
@@ -44,22 +45,22 @@ class AddAttribute extends BasePatcher
 	void patch(XML xml, XML operation)
 	{
 		XML path = operation.get('path').get(0);
-		XML key = operation.get('key').get(0);
+		XML name = operation.get('name').get(0);
 		XML value = operation.get('value').get(0);
 		
 		if (not path) return;
-		if (not key) return;
+		if (not name) return;
 		if (not value) return;
 		
 		string path_value = path.value();
-		string key_value = key.value();
+		string name_value = name.value();
 		string value_value = value.value();
 		
 		Collection items = xml.xpath(path_value);
 		for (int i=0; i<items.count(); i++)
 		{
 			XML item = items[i];
-            item.addAttribute(key_value, value_value);
+            item.addAttribute(name_value, value_value);
 		}
 	}
 }

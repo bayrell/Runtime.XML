@@ -46,13 +46,22 @@ class Append extends BasePatcher
 		
 		if (not path) return;
 		
+		string position = operation.attr("position");
 		string path_value = path.value();
 		
 		Collection items = xml.xpath(path_value);
 		for (int i=0; i<items.count(); i++)
 		{
 			XML item = items[i];
-			item.appendItems(value.childs());
+			
+			if (position == "first")
+			{
+				item.prependItems(value.childs());
+			}
+			else
+			{
+				item.appendItems(value.childs());
+			}
 		}
 	}
 }

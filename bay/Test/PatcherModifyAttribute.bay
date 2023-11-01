@@ -42,7 +42,7 @@ class PatcherModifyAttribute
 		XML operation = XML::loadXml(
 			'<operation type="edit_attribute">
 				<path>/root/item</path>
-                <key>name</key>
+                <name>name</name>
                 <value>test2</value>
 			</operation>'
 		);
@@ -57,7 +57,7 @@ class PatcherModifyAttribute
 				<item>1</item>
 				<item name="test2">2</item>
 				<item>3</item>
-			</root>', true
+			</root>'
 		);
 	}
 	

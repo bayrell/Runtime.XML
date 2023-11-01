@@ -110,7 +110,7 @@ class YamlConverter
 					exists_value = new Vector();
 					if (res.has(key))
 					{
-						exists_value.pushValue(res.get(key));
+						exists_value = exists_value.concat(res.get(key));
 					}
 				}
 				

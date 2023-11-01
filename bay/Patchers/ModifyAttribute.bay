@@ -34,6 +34,7 @@ class ModifyAttribute extends BasePatcher
 			'edit_attribute',
 			'attr_edit',
 			'attribute_edit',
+			'editAttribute',
 		];
 	}
 	
@@ -44,25 +45,25 @@ class ModifyAttribute extends BasePatcher
 	void patch(XML xml, XML operation)
 	{
 		XML path = operation.get('path').get(0);
-		XML key = operation.get('key').get(0);
+		XML name = operation.get('name').get(0);
 		XML value = operation.get('value').get(0);
 		
 		if (not path) return;
-		if (not key) return;
+		if (not name) return;
 		if (not value) return;
 		
 		string path_value = path.value();
-		string key_value = key.value();
+		string name_value = name.value();
 		string value_value = value.value();
 		
 		Collection items = xml.xpath(path_value);
 		for (int i=0; i<items.count(); i++)
 		{
 			XML item = items[i];
-			if (item.attr(key_value) !== null)
+			if (item.attr(name_value) !== null)
 			{
-            	item.removeAttribute(key_value);
-            	item.addAttribute(key_value, value_value);
+            	item.removeAttribute(name_value);
+            	item.addAttribute(name_value, value_value);
 			}
 		}
 	}
