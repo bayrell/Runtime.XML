@@ -114,7 +114,7 @@ class YamlConverter
 					}
 				}
 				
-				exists_value.pushValue(value);
+				exists_value.push(value);
 				value = exists_value;
 			}
 			
@@ -127,7 +127,7 @@ class YamlConverter
 				value = value.toCollection();
 			}
 			
-			res.setValue(key, value);
+			res.set(key, value);
 		}
 		
 		return res;
@@ -161,5 +161,4 @@ class YamlConverter
 		
 		return yaml;
 	}
-	
 }

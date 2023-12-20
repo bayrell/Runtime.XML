@@ -34,7 +34,7 @@ class PatcherProvider extends BaseProvider
 	 */
 	async void start()
 	{
-		Collection<XMLPatcher> patchers = @.entities.filter( lib::isInstance(classof XMLPatcher) );
+		Collection<XMLPatcher> patchers = @.getEntities(classof XMLPatcher);
 		for (int i=0; i<patchers.count(); i++)
 		{
 			XMLPatcher annotation = patchers.get(i);
@@ -44,7 +44,7 @@ class PatcherProvider extends BaseProvider
 			for (int j=0; j<patcher_types.count(); j++)
 			{
 				string patcher_type = patcher_types.get(j);
-				this.patchers.setValue(patcher_type, patcher);
+				this.patchers.set(patcher_type, patcher);
 			}
 		}
 	}
@@ -61,5 +61,4 @@ class PatcherProvider extends BaseProvider
 		}
 		return this.patchers.get(patcher_type);
 	}
-	
 }

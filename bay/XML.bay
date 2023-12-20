@@ -45,7 +45,7 @@ class XML
 		$errors = new \Runtime\Vector();
 		foreach (libxml_get_errors() as $error)
 		{
-			$errors->pushValue( trim($error->message) );
+			$errors->push( trim($error->message) );
 		}
 		libxml_use_internal_errors($old_value);
 		
@@ -234,11 +234,11 @@ class XML
 			{
 				if ($trim)
 				{
-					$items->setValue($key, \Runtime\rs::trim((string)$value));
+					$items->set($key, \Runtime\rs::trim((string)$value));
 				}
 				else
 				{
-					$items->setValue($key, (string)$value);
+					$items->set($key, (string)$value);
 				}
 			}
 		}
@@ -436,7 +436,7 @@ class XML
 		{
 			$item = static::newInstance();
 			$item->xml = $xml;
-			$res->pushValue($item);
+			$res->push($item);
 		}
 		#endif
 		
