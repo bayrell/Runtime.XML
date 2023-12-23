@@ -152,7 +152,9 @@ class YamlConverter
 		Map data = this.toDict(this.xml);
 
 		#ifcode PHP then
-		$data = \Runtime\rtl::ObjectToNative($data);
+		$serializer = new \Runtime\Serializer();
+		$serializer->removeFlag(\Runtime\Serializer::ALLOW_CLASS_NAME);
+		$data = $serializer->toNative($data);
 		$yaml = \Symfony\Component\Yaml\Yaml::dump(
 			$data, 10, 2,
 			\Symfony\Component\Yaml\Yaml::DUMP_OBJECT_AS_MAP
