@@ -146,17 +146,20 @@ class YamlConverter
 	/**
 	 * Convert XML to Yaml
 	 */
-	string convert()
+	string convert(Dict params = null)
 	{
 		string yaml = "";
 		Map data = this.toDict(this.xml);
-
+		
+		if (params == null) params = {};
+		int indent_spaces = params.get("indent-spaces", 2);
+		
 		#ifcode PHP then
 		$serializer = new \Runtime\Serializer();
 		$serializer->removeFlag(\Runtime\Serializer::ALLOW_CLASS_NAME);
 		$data = $serializer->toNative($data);
 		$yaml = \Symfony\Component\Yaml\Yaml::dump(
-			$data, 10, 2,
+			$data, 10, $indent_spaces,
 			\Symfony\Component\Yaml\Yaml::DUMP_OBJECT_AS_MAP
 		);
 		#endif
