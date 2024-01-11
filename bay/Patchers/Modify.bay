@@ -1,7 +1,7 @@
 /*!
  *  Bayrell Runtime Library
  *
- *  (c) Copyright 2016-2023 "Ildar Bikmamatov" <support@bayrell.org>
+ *  (c) Copyright 2016-2024 "Ildar Bikmamatov" <support@bayrell.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -60,6 +60,7 @@ class Modify extends BasePatcher
 			{
             	item.removeChilds();
             	item.removeAttributes();
+				item.setValue(item_new.value());
 				item.appendItems(item_new.childs());
 				item.addAttributes(item_new.attributes());
 			}

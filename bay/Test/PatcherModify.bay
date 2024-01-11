@@ -1,7 +1,7 @@
 /*!
  *  Bayrell Runtime Library
  *
- *  (c) Copyright 2016-2023 "Ildar Bikmamatov" <support@bayrell.org>
+ *  (c) Copyright 2016-2024 "Ildar Bikmamatov" <support@bayrell.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -86,4 +86,66 @@ class PatcherModify
 		);
 	}
 	
+	
+	@Test{}
+	static void testModify2()
+	{
+		XML xml = XML::loadXml(
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<template>
+				<yaml>
+					<services>
+						<test>
+							<image>test</image>
+						</test>
+						<database>
+							<image>database</image>
+						</database>
+					</services>
+				</yaml>
+			</template>'
+		);
+		
+		XML operation1 = XML::loadXml(
+			'<operation type="add" priority="-1000">
+			  <path>/template/yaml/services/*[not(dns)]</path>
+			  <value>
+				<dns array="true">172.18.0.1</dns>
+			  </value>
+			</operation>' /**/
+		);
+		
+		xml.patch(operation1);
+		
+		XML operation2 = XML::loadXml(
+			'<operation type="edit">
+				<path>/template/yaml/services/*/dns</path>
+				<value>
+					<dns>172.30.0.1</dns>
+				</value>
+			</operation>' /**/
+		);
+		
+		xml.patch(operation2);
+		
+		XmlTest::assertEqualXml(
+			'Patch xml error',
+			xml,
+			'<?xml version="1.0" encoding="UTF-8"?>
+			<template>
+				<yaml>
+					<services>
+						<test>
+							<image>test</image>
+							<dns>172.30.0.1</dns>
+						</test>
+						<database>
+							<image>database</image>
+							<dns>172.30.0.1</dns>
+						</database>
+					</services>
+				</yaml>
+			</template>'
+		);
+	}
 }
