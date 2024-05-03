@@ -18,7 +18,7 @@
 
 namespace Runtime.XML;
 
-use Runtime.Entity;
+use Runtime.Entity.Entity;
 
 
 class XMLPatcher extends Entity
