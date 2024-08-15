@@ -155,9 +155,9 @@ class YamlConverter
 		int indent_spaces = params.get("indent-spaces", 2);
 		
 		#ifcode PHP then
-		$serializer = new \Runtime\Serializer();
-		$serializer->removeFlag(\Runtime\Serializer::ALLOW_CLASS_NAME);
-		$data = $serializer->toNative($data);
+		$serializer = new \Runtime\SerializerNative();
+		$serializer->removeFlag(\Runtime\Serializer::ALLOW_OBJECTS);
+		$data = $serializer->encode($data);
 		$yaml = \Symfony\Component\Yaml\Yaml::dump(
 			$data, 10, $indent_spaces,
 			\Symfony\Component\Yaml\Yaml::DUMP_OBJECT_AS_MAP
