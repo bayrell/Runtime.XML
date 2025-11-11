@@ -464,8 +464,8 @@ class XML
 	 */
 	string toString(Dict params = null)
 	{
-		bool indent = params['indent'] |> default bool true;
-		bool wrap = params['wrap'] |> default bool false;
+		bool indent = params.get('indent');
+		bool wrap = params.get('wrap');
 		string xml_str = '';
 		
 		#ifcode PHP then
